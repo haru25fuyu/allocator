@@ -1,13 +1,14 @@
 #include "Allocator.h"
 #include <assert.h>
 
-void* Allocator::Alloc(unsigned int size)
+void* Allocator::Alloc(size_t size)
 {
 	for (size_t i = 0; i < delete_idx.size(); ++i) {
 		if (available_mem[delete_idx[i]]->size_ == size) {
 			return available_mem[delete_idx[i]]->GetMemory();
 		}
 	}
+
 	void* front = front_available_;
 	available_mem.resize(available_mem.size() + 1);
 	int idx = available_mem.size() - 1;
@@ -15,6 +16,8 @@ void* Allocator::Alloc(unsigned int size)
 	available_mem[idx]->size_ = size;
 	//貸出ししているメモリの先頭アドレスから、貸出サイズ足した値がフリーアドレスの先頭になる
 	front_available_ = available_mem[idx]->GetMemory() + available_mem[idx]->size_;
+	if (front_available_ > memory_+size_)
+		return nullptr;
 	return  available_mem[idx]->GetMemory();
 }
 

@@ -51,7 +51,8 @@ public:
 	///			確保したメモリの先頭アドレス
 	///		</returns>
 	///
-	void* Alloc(unsigned int size);
+	
+	void* Alloc(size_t size);
 
 	/// <summary>
 	///		指定メモリを解放
