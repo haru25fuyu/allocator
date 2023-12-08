@@ -1,5 +1,6 @@
 #pragma once
 #include<vector>
+#include<iostream>
 
 //貸出メモリのヘッダー
 struct MemoryInfo {
@@ -10,6 +11,8 @@ struct MemoryInfo {
 	MemoryInfo* next_mem = nullptr;		//<! 次に貸し出された先頭メモリ
 	bool		returned = false;		//<! 返却されたかどうか
 };
+
+
 
 //-------------------------------------------------------
 /// <summary>

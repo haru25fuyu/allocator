@@ -9,11 +9,11 @@ void* Allocator::Alloc(size_t size)
 		//貸出た先頭アドレスで検索する
 		if (info_memory == nullptr)
 			break;
-
+		if (info_memory->next_mem == nullptr)
+			break;
 		if (!info_memory->returned || info_memory->size_ != size) {
+			
 			info_memory = info_memory->next_mem;
-			if (info_memory->next_mem == nullptr)
-				break;
 			mem = info_memory->GetMemory();
 			continue;
 		}
