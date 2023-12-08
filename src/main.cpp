@@ -20,23 +20,12 @@ int	main()
 	void* bb;
 	void* cc;
 	int* a;
-	std::vector<void*> gg;
 
 	// メモリを確保
 	pAllocMemory = allocator.Alloc(10);
 	aa = allocator.Alloc(10);
 	bb = allocator.Alloc(10);
 	
-	while (true) {
-		gg.emplace_back(allocator.Alloc(50));
-		if (gg[gg.size() - 1] == nullptr) {
-			std::cout << "null帰ってきたよ" <<gg[gg.size() - 1]<< std::endl;
-			break;
-		}
-	}
-
-	
-
 	/*
 		テストコード
 		- 意図したとおりの結果か？

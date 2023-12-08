@@ -2,14 +2,14 @@
 #include<vector>
 
 //貸出メモリのヘッダー
-struct MemoryInof {
+struct MemoryInfo {
 	unsigned int size_;
 	char* GetMemory() {
-		return  (char*)this + sizeof(MemoryInof);
+		return  (char*)this + sizeof(MemoryInfo);
 	}
+	MemoryInfo* next_mem = nullptr;		//<! 次に貸し出された先頭メモリ
+	bool		returned = false;		//<! 返却されたかどうか
 };
-
-
 
 //-------------------------------------------------------
 /// <summary>
@@ -18,13 +18,10 @@ struct MemoryInof {
 //-------------------------------------------------------
 class Allocator
 {
-	char*			front_available_;	//<! 利用可能な先頭アドレス
+	char*		front_available_;	//<! 利用可能な先頭アドレス
 	char*			memory_;			//<! アクセス可能なアドレス
 	unsigned int	size_;				//<! アクセス可能なサイズ
-
-	std::vector<MemoryInof*>	available_mem;	//<! 利用アドレスの情報
-	std::vector<size_t>			delete_idx;		//<! 返却アドレスの情報
-
+	char*			last_memory_;		//<! 最後に取得されたメモリ
 
 public:
 	/// <summary>
@@ -36,8 +33,9 @@ public:
 	///
 	Allocator(char* pMemory, unsigned int size) :
 		memory_(pMemory),
-		size_(size),		
-		front_available_(pMemory + sizeof(Allocator))
+		size_(size),
+		front_available_(pMemory),
+		last_memory_(pMemory)
 	{
 	}
 
