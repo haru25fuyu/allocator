@@ -5,14 +5,12 @@
 //貸出メモリのヘッダー
 struct MemoryInfo {
 	unsigned int size_;
-	char* GetMemory() {
+	void* GetMemory() {
 		return  (char*)this + sizeof(MemoryInfo);
 	}
-	MemoryInfo* next_mem = nullptr;		//<! 次に貸し出された先頭メモリ
-	bool		returned = false;		//<! 返却されたかどうか
+	char*	next_mem = nullptr;		//<! 次に貸し出された先頭メモリ
+	char*	free_next = nullptr;	//<!　次に返却されたメモリ
 };
-
-
 
 //-------------------------------------------------------
 /// <summary>
@@ -21,10 +19,12 @@ struct MemoryInfo {
 //-------------------------------------------------------
 class Allocator
 {
-	char*		front_available_;	//<! 利用可能な先頭アドレス
-	char*			memory_;			//<! アクセス可能なアドレス
-	unsigned int	size_;				//<! アクセス可能なサイズ
-	char*			last_memory_;		//<! 最後に取得されたメモリ
+	char* front_available_;	//<! 利用可能な先頭アドレス
+	char* memory_;			//<! アクセス可能なアドレス
+	unsigned int	size_;	//<! アクセス可能なサイズ
+	char* last_memory_;		//<! 最後に取得されたメモリ
+	char* returned_first;		//<! 返却された先頭メモリ
+	char* returned_last;		//<! 最後に返却されたメモリ
 
 public:
 	/// <summary>
@@ -38,7 +38,9 @@ public:
 		memory_(pMemory),
 		size_(size),
 		front_available_(pMemory),
-		last_memory_(pMemory)
+		last_memory_(pMemory),
+		returned_first(nullptr),
+		returned_last(nullptr)
 	{
 	}
 
