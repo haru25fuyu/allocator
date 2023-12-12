@@ -55,10 +55,14 @@ int	main()
 	
 	for (int i = 0; i < 1000; ++i) {
 		a = new int;
-		
-		std::cout << "a：" << *a << std::endl;
+		float* b = new float;
+		double* c = new double;
 		std::cout << "Ra：" << a << std::endl;
+		std::cout << "Rb：" << b << std::endl;
+		std::cout << "Rc：" << c << std::endl;
 		delete a;
+		delete b;
+		delete c;
 	}
 
 

@@ -8,8 +8,8 @@ struct MemoryInfo {
 	void* GetMemory() {
 		return  (char*)this + sizeof(MemoryInfo);
 	}
-	char*	next_mem = nullptr;		//<! 次に貸し出された先頭メモリ
-	char*	free_next = nullptr;	//<!　次に返却されたメモリ
+	char* next_mem = nullptr;		//<! 次に貸し出された先頭メモリ
+	char* free_next = nullptr;	//<!　次に返却されたメモリ
 };
 
 //-------------------------------------------------------
@@ -23,8 +23,9 @@ class Allocator
 	char* memory_;			//<! アクセス可能なアドレス
 	unsigned int	size_;	//<! アクセス可能なサイズ
 	char* last_memory_;		//<! 最後に取得されたメモリ
-	char* returned_first;		//<! 返却された先頭メモリ
-	char* returned_last;		//<! 最後に返却されたメモリ
+	char* returned_first_;		//<! 返却された先頭メモリ
+	char* returned_last_;		//<! 最後に返却されたメモリ
+	char* rental_first_;		//<! レンタルした基準メモリ
 
 public:
 	/// <summary>
@@ -39,8 +40,9 @@ public:
 		size_(size),
 		front_available_(pMemory),
 		last_memory_(pMemory),
-		returned_first(nullptr),
-		returned_last(nullptr)
+		returned_first_(nullptr),
+		returned_last_(nullptr),
+		rental_first_(pMemory)
 	{
 	}
 
@@ -54,7 +56,7 @@ public:
 	///			確保したメモリの先頭アドレス
 	///		</returns>
 	///
-	
+
 	void* Alloc(size_t size);
 
 	/// <summary>
