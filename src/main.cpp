@@ -57,14 +57,15 @@ int	main()
 		a = new int;
 		float* b = new float;
 		double* c = new double;
+		void* d = allocator.Alloc(10);
 		std::cout << "Ra：" << a << std::endl;
 		std::cout << "Rb：" << b << std::endl;
 		std::cout << "Rc：" << c << std::endl;
 		delete a;
 		delete b;
 		delete c;
+		delete d;
 	}
-
 
 	// メモリを解放
 	allocator.Free(pAllocMemory);
